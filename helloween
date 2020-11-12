@@ -1,0 +1,159 @@
+#include <iostream>
+#include <cstring>
+
+using namespace std;
+
+
+class Decoratiune
+{
+    private:
+        char* nume;
+        char* culoare;
+        bool reciclabila;
+        float pret;
+    public:
+        Decoratiune()
+        {
+            nume=NULL;
+            culoare=NULL;
+            reciclabila=false;
+        }
+
+        float Pret()
+        {
+            return this->pret;
+        }
+
+        void set_pret(float pret)
+        {
+            this->pret=pret;
+        }
+
+        void set_nume(char* nume)
+        {
+            this->nume=new char[strlen(nume)+1];
+            strcpy(this->nume,nume);
+        }
+
+         char* afis_nume()
+        {
+            return this->nume;
+        }
+
+        void set_culoare(char* culoare)
+        {
+            this->culoare=new char[strlen(culoare)+1];
+        }
+
+        char* get_culoare()
+        {
+            return this->culoare;
+        }
+
+        void set_reciclabila(bool reciclabila)
+        {
+            this->reciclabila=reciclabila;
+        }
+        bool get_reciclabila()
+        {
+            return this->reciclabila;
+        }
+
+
+        friend ostream& operator<<(ostream& out,const Decoratiune& d)
+        {
+            out<<"numele decoratiunii: " <<d.nume<<endl;
+            return out;
+        }
+
+
+};
+
+class ListaProduse
+{
+    private:
+        int nrdec;
+        Decoratiune decoratiuni[100];
+    public:
+        ListaProduse()
+        {
+            nrdec=0;
+        }
+        void setDecoratiune(int nrde,Decoratiune decoratiuni[100])
+        {
+            this->nrdec=nrdec;
+            for(int i=1; i<=nrdec; i++)
+            {
+                this->decoratiuni[i]=decoratiuni[i];
+
+            }
+
+        }
+        Decoratiune get_Decoratiune(int index)
+        {
+            return this->decoratiuni[index];
+        }
+        Decoratiune operator[](int i)
+        {
+            if(i>0 && i<=nrdec)
+                return this->decoratiuni[i];
+
+        }
+        ListaProduse& operator+(const Decoratiune& decoratiune)
+        {
+            this->nrdec=nrdec+1;
+            this->decoratiuni[nrdec]=decoratiune;
+            return *this;
+        }
+        ListaProduse& operator=(const ListaProduse& lis)
+        {
+            this->nrdec=lis.nrdec;
+            for(int i=1;i<=nrdec;i++)
+                this->decoratiuni[i]=lis.decoratiuni[i];
+            return *this;
+
+        }
+        int get_nrdec()
+        {
+            return this->nrdec;
+        }
+        float Pret()
+        {
+            if(nrdec==1)
+                return this->decoratiuni[1].Pret();
+            else
+            {
+                float pr=0;
+                for(int i=1; i<=nrdec; i++)
+                    pr=pr+this->decoratiuni[i].Pret();
+                return pr;
+            }
+        }
+        char* afis_nume()
+        {
+            return this->decoratiuni[1].afis_nume();
+        }
+
+};
+
+int main()
+{
+    Decoratiune a,c;
+    a.set_nume("Pahare");
+    a.set_culoare("Negre");
+    a.set_pret(10.5);
+    c.set_nume("Lumanari");
+    c.set_culoare("Rosii");
+    c.set_pret(20.7);
+    ListaProduse b;
+    b=b+a;
+    b=b+c;
+    cout<<b[1];
+    cout<<"Pretul: "<<b[1].Pret()<<" lei"<<endl;
+    cout<<b[2];
+    cout<<"Pretul: "<<b[2].Pret()<<" lei"<<endl;
+    cout<<"Pret total: "<<b.Pret()<<" lei"<<endl;
+ 
+
+    return 0;
+}
