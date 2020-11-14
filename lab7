@@ -1,0 +1,200 @@
+#include <iostream>
+
+using namespace std;
+
+
+
+class Persoana
+{
+    string nume;
+    string cnp;
+    float inaltime;
+public:
+    Persoana()
+    {
+        this->nume="anonim";
+        this->cnp="0";
+        this->inaltime=0;
+    }
+    Persoana(string nume,string cnp,float inaltime)
+    {
+        this->nume=nume;
+        this->cnp=cnp;
+        this->inaltime=inaltime;
+    }
+    Persoana(const Persoana& p)
+    {
+        this->nume=p.nume;
+        this->cnp=p.cnp;
+        this->inaltime=p.inaltime;
+    }
+    Persoana& operator=(const Persoana& p)
+    {
+        if(this!=NULL)
+        {
+            this->nume=p.nume;
+            this->cnp=p.cnp;
+            this->inaltime=p.inaltime;
+        }
+        return *this;
+    }
+    bool operator<(const Persoana& p)
+    {
+        return this->inaltime<p.inaltime;
+    }
+     friend ostream& operator<<(ostream& out, const Persoana& p)
+   {
+          out<<"Nume: "<<p.nume<<", CNP: "<<p.cnp<<", Inaltime: "<<p.inaltime;
+
+          return out;
+
+   }
+
+   friend istream& operator>>(istream& in, Persoana& p)
+   {
+
+       cout<<"Numele: ";
+       in>>p.nume;
+       cout<<"CNP: ";
+       in>>p.cnp;
+       cout<<"Inaltimea: ";
+       in>>p.inaltime;
+
+       return in;
+   }
+
+    ~Persoana()
+    {
+
+    }
+
+
+
+};
+class Student: public Persoana
+{
+    private:
+        string fac;
+        bool buget;
+        int nr_note;
+        int* note;
+    public:
+        Student():Persoana()
+        {
+            this->fac="anonim";
+            this->buget=0;
+            this->nr_note=0;
+            this->note=NULL;
+        }
+        Student(string nume,string cnp,float inaltime,string fac,bool buget,int nr_note,int* note):Persoana(nume,cnp,inaltime)
+        {
+            this->fac=fac;
+            this->buget=buget;
+            this->nr_note=nr_note;
+            this->note=new int[nr_note+1];
+            for(int i=0; i<nr_note; i++)
+                this->note[i]=note[i];
+        }
+        Student(const Student& student):Persoana(student)
+        {
+            this->fac=student.fac;
+            this->buget=student.buget;
+            this->nr_note=student.nr_note;
+            this->note=new int[student.nr_note+1];
+            for(int i=0; i<student.nr_note; i++)
+                this->note[i]=student.note[i];
+        }
+        Student& operator=(const Student& student)
+        {
+            if(this!=&student)
+            {
+                Persoana::operator=(student);
+                this->fac=student.fac;
+                this->buget=student.buget;
+                this->nr_note=student.nr_note;
+                this->note=new int[student.nr_note+1];
+                for(int i=0; i<student.nr_note; i++)
+                    this->note[i]=student.note[i];
+
+            }
+            return *this;
+        }
+        float medie()
+        {
+            float x=0;
+            for(int i=0;i<nr_note;i++)
+                x=x+note[i];
+            return x/nr_note;
+        }
+
+        bool operator<(Student student)
+        {
+            return this->medie()<student.medie();
+        }
+
+        friend ostream& operator<<(ostream& out, const Student& s)
+         {
+
+             out<<(Persoana&)s;
+
+             out<<", Facultate: "<<s.fac<<",  Buget/taxa: ";
+             if (s.buget==1)
+                out<<"Buget ";
+             else
+                out<<"Taxa ";
+             out<<", Numar note: "<<s.nr_note<<", Notele: ";
+             for(int i=0;i<s.nr_note;i++)
+                out<<s.note[i]<<" ";
+             return out;
+
+         }
+
+        friend istream& operator>>(istream& in, Student& s){
+
+            in>>(Persoana&)s;
+            cout<<"Introduceti facultatea: ";
+            in>>s.fac;
+            cout<<"Buget?";
+            in>>s.buget;
+            cout<<"Introduceti nr note:";
+            in>>s.nr_note;
+            if(s.note!=NULL)
+                delete[] s.note;
+            cout<<"Introduceti notele!";
+            for(int i=0;i<s.nr_note;i++)
+                in>>s.note[i];
+
+
+            return in;
+
+        }
+
+
+        ~Student()
+        {
+            if(this->note!=NULL)
+                delete[] this->note;
+        }
+
+
+
+};
+
+int main()
+{
+    Persoana p1("Ioana","60010435345",1.83);
+    Persoana p2;
+    p2=p1;
+    cout<<p1<<endl;
+    cout<<p2<<endl;
+    int n1[3]={9,8,9};
+    int n2[3]={7,8,10};
+    Student s2("Andreea","6043234",1.74,"mate",1,3,n1);
+    Student s3("Ioana","6023424",1.65,"mate",0,3,n2);
+
+    cout<<s2<<endl;
+    cout<<s3<<endl;
+    cout<<(s2.medie()<s3.medie());
+
+    return 0;
+}
