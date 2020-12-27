@@ -1,0 +1,1941 @@
+#include <iostream>
+#include<cstring>
+#include <vector>
+#include <list>
+#include<iterator>
+#include <fstream>
+#include <vector>
+#include <set>
+#include <unordered_map>
+using namespace std;
+///BUUUUUN
+ifstream f("dateIn.txt");
+ofstream g("dateOut.txt");
+
+class magazin
+{
+    private:
+        char** protein; ////////////////////////////////
+        char** carbo;
+
+        int np;
+        int nc;
+
+        int k=0;
+
+        int j = 0;
+        char nume_magazin[12] = "PROTEINFIT";
+        int* pret_protein;
+        double pret_produs;
+        float suma = 0;
+        char tasta;
+        static int tasta_start_shop;
+        const int tasta_stop_shop;
+        int Tasta;
+        bool b1;
+        int pret_prosop;
+        char* cod;
+    public:
+
+        magazin() :tasta_stop_shop(0) {};
+        magazin(const char** proteine, int np, const char** carbos, int nc, int* pret_protein, const int pret_prosop)
+            :tasta_stop_shop(0)
+        {
+            this->pret_protein = new int[np + nc - 1];
+            for (int i = 0; i < np + nc-1; i++)
+            {
+                this->pret_protein[i] = pret_protein[i];
+            }
+            this->pret_prosop = pret_prosop;
+
+            this->np = np;
+            this->protein = new char* [np];
+            for (int i = 0; i < np; i++)
+            {
+                this->protein[i] = new char[strlen(proteine[i]) + 1];
+                strcpy(this->protein[i], proteine[i]);
+            }
+
+            this->nc = nc;
+            this->carbo = new char* [nc];
+            for (int i = 0; i < nc; i++)
+            {
+                this->carbo[i] = new char[strlen(carbos[i]) + 1];
+                strcpy(this->carbo[i], carbos[i]);
+            }
+
+
+        }
+
+        void operator ++()    ///L AM FOLOSIT LA AFISARE
+              { k++; }
+
+        magazin(int* pret_protein, const int pret_prosop) :tasta_stop_shop(0)
+        {
+            this->pret_protein = new int[18];
+            for (int i = 0; i < 18; i++)
+                this->pret_protein[i] = pret_protein[i];
+
+            this->pret_prosop = pret_prosop;
+            this->carbo = NULL;
+            this->protein = NULL;
+        }
+
+        void afis_welcome_magazin()
+        {
+            cout << "Bine ati venit la magazinul nostru " << nume_magazin << "!" << endl;
+            cout << "Alege ceea ce te intereseaza si apasta tasta corespunzatoare!" << endl;
+        }
+
+        void afis_prezentare_produse()
+        {
+
+            int i=0;
+            cout << "_________________________________________" << "        " << "_________________________________________________" << endl;
+            cout << "|               " << protein[i] << "                 |" << "      " << "|                " << protein[i + 1] << "             |" << endl;
+            cout << "|________________________________________|" << "      " << "|_________________________________________________|" << endl;
+            i = i + 1 +k ;
+            cout << "|" << protein[i] << " :     " << pret_protein[i] << "lei    (tasta" << i << ")|" << "      " << "|" << protein[i + 1] << " :" << pret_protein[i + 1] << "lei (tasta" << i + 1 << ")|" << endl;
+            i = i + 2;
+            cout << "|" << protein[i] << " :     " << pret_protein[i] << "lei    (tasta" << i << ")|" << "      " << "|" << protein[i + 1] << "                          :" << pret_protein[i + 1] << "lei (tasta" << i + 1 << ")|" << endl;
+            i = i + 2;
+            cout << "|" << protein[i] << " :      " << pret_protein[i] << "lei    (tasta" << i << ")|" << "      " << "|" << protein[i + 1] << "                          :" << pret_protein[i + 1] << "lei (tasta" << i + 1 << ")|" << endl;
+            i = i + 2;
+            cout << "|" << protein[i] << " :  " << pret_protein[i] << "lei    (tasta" << i << ")|" << "      " << "|_________________________________________________|" << endl;
+            i = i + 2;
+            cout << "|________________________________________|" << endl;
+
+            //////////////////////////////////////////////////////////////////////////////////////////////
+            b1 = j == 0;
+            if (b1) {
+                j = 0;
+                cout << "__________________________________________" << "        " << "________________________________________" << endl;
+                cout << "|              " << carbo[j] << "               |" << "      " << "|            " << carbo[j + 1] << "         |" << endl;
+                cout << "|_________________________________________|" << "      |________________________________________|" << endl;
+                j = j + 2;
+                cout << "|" << carbo[j] << "  : " << pret_protein[i] << "lei (tasta" << i << ")|" << "      " << "|" << carbo[j + 1] << "        : " << pret_protein[i + 1] << "lei (tasta" << i + 1 << ")|" << endl;
+                j = j + 2;
+                i = i + 2;
+                cout << "|" << carbo[j] << "      : " << pret_protein[i] << "lei (tasta" << i << ")|" << "      " << "|" << carbo[j + 1] << "                  :" << pret_protein[i + 1] << "lei (tasta" << i + 1 << ")|" << endl;
+                j = j + 2;
+                i = i + 2;
+                cout << "|" << carbo[j] << "     :  " << pret_protein[i] << "lei (tasta" << i << ")|" << "      " << "|" << carbo[j + 1] << "        :" << pret_protein[i + 1] << "lei (tasta" << i + 1 << ")|" << endl;;
+                j = j + 2;
+                i = i + 2;
+                cout << "|" << carbo[j] << "     :  " << pret_protein[i] << "lei (tasta" << i << ")|" << "      " << "|" << carbo[j + 1] << " :" << pret_protein[i + 1] << "lei (tasta" << i + 1 << ")|" << endl;
+                j = j + 1;
+                cout << "|_________________________________________|" << "      |________________________________________|" << endl;
+
+            }
+            cout << endl;
+            cout << "________________________" << endl;
+            cout << "|PROSOP: " << pret_prosop << "lei  (tasta1)|" << endl;
+            cout << "|_______________________|" << endl;
+            cout << endl;
+        }
+
+
+        void set_pret(int tasta)    ///settle  + functionalitate
+        {
+            this->Tasta = tasta;
+            this->suma = suma + pret_protein[tasta];    ///calculam suma totala a cosului care la fiecare apelare, suma tot va creste
+            this->pret_produs = pret_protein[tasta];
+        }
+
+        double calculam_pret_cos()   ///gettle
+        {
+            return this->suma;
+        }
+
+        double pretu_produsului()
+        {
+            return this->pret_produs;
+        }
+
+        void afis_nume_produs(int tasta)
+        {
+            //strcpy(nume_produse_cos,protein[tasta]);
+            cout << protein[tasta];
+        }
+
+        void afis_nume_produs1(int tasta)
+        {
+            //strcpy(nume_produse_cos,carbo[tasta]);
+            cout << carbo[tasta];
+        }
+
+        int setare_produs()
+        {
+            return this->tasta;
+        }
+
+        friend istream& operator>> (istream& in, magazin& citire)    ///Operator>>
+        {
+            in >> citire.tasta;    ///MERGE? FARA ALOCARE CEVA
+            return in;
+        }
+
+        friend ostream& operator<< (ostream& out, magazin& pro)       ///operator <<
+        {
+            cout << " Pentru a adauga in cos produsele dorite, apasati tasta " << pro.tasta_start_shop << ", iar apoi alegeti-va produsele dorite" << endl;
+            cout << " Dupa ce adaugati in cos, apasati tasta " << pro.tasta_stop_shop << "!" << endl;
+            cout <<" Daca nu doriti nimic apasati tasta 1, iar apoi tasta 0"<<endl;
+            return out;
+        }
+
+        friend ifstream& operator>> (ifstream& inn, magazin& citire)    ///Operator>>
+        {
+            inn >> citire.tasta;    ///MERGE? FARA ALOCARE CEVA
+            return inn;
+        }
+
+        friend ofstream& operator<< (ofstream& outt, magazin& pro)       ///operator <<
+        {
+            outt << " Pentru a adauga in cos produsele dorite, apasati tasta " << pro.tasta_start_shop << ", iar apoi alegeti-va produsele dorite" << endl;
+            outt<< " Dupa ce adaugati in cos, apasati tasta " << pro.tasta_stop_shop << "!" << endl;
+            return outt;
+        }
+
+        magazin(const magazin& citire)
+            : tasta_stop_shop(citire.tasta_stop_shop)
+            , j(citire.j)
+            , pret_produs(citire.pret_produs)
+            , suma(citire.suma)
+            , Tasta(citire.Tasta)
+            , pret_prosop(citire.pret_prosop)
+            , b1(citire.b1)
+        {
+
+            this->carbo=new char*[citire.nc+1];
+            for (int i = 0; i < citire.nc; i++)
+            {
+                this->carbo[i] = new char[strlen(citire.carbo[i]) + 1];
+                strcpy(this->carbo[i], citire.carbo[i]);
+            }
+            this->np = citire.np;
+            this->nc = citire.nc;
+
+            this->protein=new char*[citire.np+1];
+            for (int i = 0; i < citire.np; i++)
+            {
+                this->protein[i] = new char[strlen(citire.protein[i] + 1)];
+                strcpy(this->protein[i], citire.protein[i]);
+            }
+            this->pret_protein = new int[np+nc-1];
+            for(int i = 0; i < np+nc-1; i++)
+            {
+                this->pret_protein[i] = citire.pret_protein[i];
+            }
+
+        }
+
+
+          magazin& operator =(const magazin citire)    ///OPERATOR "="
+      {
+
+          if(this!=&citire)
+          {
+              this->j=citire.j ;
+              this->pret_produs=citire.pret_produs;
+              this->suma=citire.suma;
+              this->Tasta=citire.Tasta;
+              this->b1=citire.b1;
+              this->pret_prosop=citire.pret_prosop;
+
+
+              this->pret_protein=new int[citire.nc + citire.np - 1];
+              for (int i = 0; i < citire.nc + citire.np - 1; i++)
+              {
+                  this->pret_protein[i] = citire.pret_protein[i];
+              }
+
+
+              this->carbo = new char* [citire.nc + 1];
+              for (int i = 0; i < citire.nc; i++)
+              {
+                  this->carbo[i] = new char[strlen(citire.carbo[i]) + 1];
+                  strcpy(this->carbo[i], citire.carbo[i]);
+              }
+
+              this->np = citire.np;
+              this->nc = citire.nc;
+
+              this->protein = new char* [citire.np + 1];
+              for (int i = 0; i < citire.np; i++)
+              {
+                  this->protein[i] = new char[strlen(citire.protein[i] + 1)];
+                  strcpy(this->protein[i], citire.protein[i]);
+              }
+
+          }
+          return *this;
+
+      }
+
+
+
+        ~magazin()    ///destructor
+        {
+
+            ///DOAR CE E CU NEW
+
+            if (this->pret_protein != NULL)
+                delete[] this->pret_protein;
+
+
+
+        }
+         int operator[](int i) {
+             if( i < 5) {
+               return pret_protein[i];
+
+             }
+             else
+                cout<<"NU MERGE";
+
+             return pret_protein[i];
+          }
+          bool operator==(magazin& s1)
+          {
+              if (pret_protein[1]==pret_protein[0])
+                return true;
+              else
+                return false;
+          }
+            bool operator<=(magazin& s1)
+          {
+              if (pret_protein[1]<=pret_protein[0])
+                return true;
+              else
+                return false;
+          }
+          explicit operator int()
+          {
+              return (int)this->suma;
+          }
+
+};
+int magazin::tasta_start_shop = 1;
+class copil_magazin : public magazin{
+
+
+    private:
+        string numecod;
+        float codr;
+    public:
+            copil_magazin(float c)
+            {
+                this->codr=c;
+            }
+            friend ostream& operator<< (ostream& out, copil_magazin& pro)       ///operator <<
+            {
+                cout<<endl;
+                cout << "Ai un cod de reducere? Daca da, adauga-l , daca nu scrieti ``NU``"<< endl;
+
+                return out;
+            }
+            friend istream& operator>> (istream& in, copil_magazin& citire)    ///Operator>>
+            {
+                in >> citire.numecod;    ///MERGE? FARA ALOCARE CEVA
+                return in;
+            }
+            friend ofstream& operator<< (ofstream& outt, copil_magazin& pro)       ///operator <<
+            {
+                outt<<endl;
+                outt << "Ai un cod de reducere? Daca da, adauga-l , daca nu scrieti ``NU``"<< endl;
+
+                return outt;
+            }
+            friend ifstream& operator>> (ifstream& inn, copil_magazin& citire)    ///Operator>>
+        {
+            inn >> citire.numecod;    ///MERGE? FARA ALOCARE CEVA
+            return inn;
+        }
+
+        int reducem()
+        {
+            if (numecod=="SUNGYM25")
+                {
+                    codr=codr-codr*30/100;
+                    return codr;
+                }
+                else return codr;
+        }
+        void afis_introdu_adresa()
+        {
+                string strada,mail,judet,oras;
+                long telefon;
+                cout<<endl;
+                cout<<"Completati adresa: "<<endl;
+                cout<<"Judet: ";
+                cin>>judet;
+                cout<<"Oras: ";
+                cin>>oras;
+                cout<<"Strada: ";
+                cin>>strada;
+
+                cout<<"adresa e-mail: ";
+                cin>>mail;
+                cout<<"Telefon: ";
+                cin>>telefon;
+                cout<<"Total cos: " <<codr <<"+"<< "15 lei transportu = "<<codr+15<<"lei"<<endl;
+                cout<<"Va multumim! Comanda dumneavoastra va ajunge in 5-7 zile lucratoare,iar plata comenzii o veti achita la primirea coletului";
+
+
+        }
+        ~copil_magazin()    ///destructor
+	{
+         ///   cout<<" Destructor";
+
+	}
+};
+class cont
+{
+
+
+    private:
+    //    int k;
+        char *nume;
+        char *prenume;
+        char *email;
+        int cod_reducere_magazin;
+        char* nume_cod_sala;
+        static int cod_reducere_sala;
+        int tasta_continuare=8;
+        int nr,cod1,coduri;
+
+    public:
+       cont()
+       {}
+       cont( int codreduceremagazin,char* nume_cod_salaa,const int nr)
+       {
+           this->nr=nr;
+           this->cod_reducere_magazin=codreduceremagazin;
+           this->nume_cod_sala=new char[strlen(nume_cod_salaa)+1];
+           strcpy(this->nume_cod_sala,nume_cod_salaa);
+
+
+       }
+       cont( int coduri,const int cod1)
+       {
+           this->coduri=coduri;
+           this->cod1=cod1;
+       }
+       void gg()
+       {
+           cout<<coduri<<" "<<cod1<<endl;
+       }
+       void afiss()
+       {
+           cout<<nr<<endl;
+       }
+       void mesaj_cont(char* N)
+       {
+            cout<<"Introduceti "<< N<<" dumneavoastra :"<<endl;
+       }
+
+      friend istream& operator>> (istream& in, cont* citire)    ///Operator>>
+       {
+             char aux[100],auxx[100];
+             in>>aux;
+             if(citire->nume!=NULL)
+                 delete[] citire->nume;
+
+             citire->nume=new char[strlen(aux)+1];
+             strcpy(citire->nume,aux);
+
+             in>>auxx;
+             if(citire->prenume!=NULL)
+                 delete[] citire->prenume;
+             citire->prenume=new char[strlen(auxx)+1];
+             strcpy(citire->prenume,auxx);
+
+             return in;
+        }
+         friend ifstream& operator>> (ifstream& inn, cont& citire)    ///Operator>>
+       {
+             char aux[100],auxx[100];
+             inn>>aux;
+             if(citire.nume!=NULL)
+                 delete[] citire.nume;
+
+             citire.nume=new char[strlen(aux)+1];
+             strcpy(citire.nume,aux);
+
+
+             inn>>auxx;
+             if(citire.prenume!=NULL)
+                 delete[] citire.prenume;
+             citire.prenume=new char[strlen(aux)+1];
+             strcpy(citire.prenume,auxx);
+
+             return inn;
+        }
+
+
+
+      friend ostream& operator<< (ostream& out,cont& pro)       ///operator <<
+      {
+          //cout<<pro.k<<endl;
+           cout<<"  Buna "<<pro.prenume<<", oficial esti membru al clubului nostru SUN GYM BUCURESTI!"<<endl;
+           cout<<"Ca si nou membru, noi iti oferim un cod de reducere de " <<pro.cod_reducere_magazin<<"% pentru orice sala ( fitness/sauna/pisinca/catarat)!"<<endl;
+           cout<<"De asemenea ,iti oferim si un cod de reducere de "<<cod_reducere_sala << "% pentru magazinul nostru PROTEINFIT"<<endl;
+           cout<<"Codul tau de reducere se numeste: "<<pro.nume_cod_sala<<endl;
+          // cout<<"Codul tau de reducere pentru magazin se numeste: "<<pro.nume_cod_magazin<<endl;
+           return out;
+      }
+       friend ofstream& operator<< (ofstream& outt,cont& pro)       ///operator <<
+      {
+          //cout<<pro.k<<endl;
+           outt<<"  Buna "<<pro.prenume<<", oficial esti membru al clubului nostru SUN GYM BUCURESTI!"<<endl;
+           outt<<"Ca si nou membru, noi iti oferim un cod de reducere de " <<pro.cod_reducere_magazin<<"% pentru orice sala ( fitness/sauna/pisinca/catarat)!"<<endl;
+           outt<<"De asemenea ,iti oferim si un cod de reducere de "<<cod_reducere_sala << "% pentru magazinul nostru PROTEINFIT"<<endl;
+           outt<<"Codul tau de reducere se numeste: "<<pro.nume_cod_sala<<endl;
+          // cout<<"Codul tau de reducere pentru magazin se numeste: "<<pro.nume_cod_magazin<<endl;
+           return outt;
+      }
+
+      void set_email(char* email)
+      {
+           this->email=new char[strlen(email)+1];
+           strcpy(this->email,email);
+
+      }
+
+      char* afis_prenume()
+      {
+            return this->prenume;
+      }
+
+       char* afis_nume()
+       {
+            return this->nume;
+       }
+
+        char* afis_email()
+       {
+           return this->email;
+       }
+
+         int verific_parola(char* parolaa)
+       {
+
+            try {
+                  if(strlen(parolaa)>8) {
+                   g << "Parola are un grad suficient de dificultate"<<endl;
+                    return 1;
+                  } else {
+                    throw 3;
+                  }
+                }
+                catch (...) {
+                 g<< "Parola SLABA"<<endl;
+                  g<<"Reintroduceti o noua parola!"<<endl;
+                  return 2;
+
+                }
+       }
+
+
+   cont(const cont& copiaza)
+    {
+
+      this->email=new char[strlen(copiaza.email)+1];
+      strcpy(this->email,copiaza.email);
+
+
+      this->nume_cod_sala=new char[strlen(copiaza.nume_cod_sala)+1];
+      strcpy(nume_cod_sala,copiaza.nume_cod_sala);
+
+      this->nume=new char[strlen(copiaza.nume)+1];
+      strcpy(nume,copiaza.nume);
+
+      this->prenume=new char[strlen(copiaza.prenume)+1];
+      strcpy(prenume,copiaza.prenume);
+
+      this->cod_reducere_magazin=copiaza.cod_reducere_magazin;
+      this->cod_reducere_sala =copiaza.cod_reducere_sala ;
+    }
+
+    cont& operator =(const cont& citire)
+    {
+
+        if(this!=&citire)
+        {
+
+
+            this->cod_reducere_sala=citire.cod_reducere_sala ;
+            this->cod_reducere_magazin=citire.cod_reducere_magazin;
+
+            this->email=new char[strlen(citire.email)+1];
+            strcpy(this->email,citire.email);
+
+
+            this->nume_cod_sala=new char[strlen(citire.nume_cod_sala)+1];
+            strcpy(this->nume_cod_sala,citire.nume_cod_sala);
+
+            this->nume=new char[strlen(citire.nume)+1];
+            strcpy(nume,citire.nume);
+
+            this->prenume=new char[strlen(citire.prenume)+1];
+            strcpy(prenume,citire.prenume);
+
+        }
+        return *this;
+
+
+    }
+
+
+    int selectare_tasta_continuare()
+    {
+        return this->tasta_continuare;
+    }
+
+ ~cont()    ///destructor
+ {
+   ///DOAR CE E CU NEW
+        if(this->nume_cod_sala!=NULL)
+            delete[] this->nume_cod_sala;
+
+        if(this->nume!=NULL)
+            delete[] this->nume;
+
+        if(this->prenume!=NULL)
+            delete[] this->prenume;
+
+       if(this->email!=NULL)
+            delete[] this->email;
+
+ }
+
+};
+
+int cont::cod_reducere_sala=30;
+
+class antrenori
+{
+
+    private:
+      const char* nume_antrenori_sala[10]={"ADI IONITA","MARIUS COSTEL","OPREA ANA"};
+      const char* nume_antrenori_escalada[3]={"BOGDAN DUDAU","JUSTIN IONESCU"};
+      const char* nume_antrenori_inot[3]={"FLOREA IOANA","BOGDAN MARIN"};
+      int *pret_antrenori_sala;
+      int *pret_antrenori_inot;
+      int *pret_antrenori_catarat;
+      int nrpret_antrenori_catarat;
+      int tasta;
+      int nr;
+      int nrpret_antrenori;
+      int nrpret_antrenori_inot;
+      int n,m;
+    public:
+      antrenori(){}
+
+      antrenori(const int nrpret_antrenori_sala,int* pret_antrenori_sala,const int nrpret_antrenori_catarat,int* pret_antrenori_catarat,int pret,int nrpret_antrenori_inot,int* pret_antrenori_inot)
+      {
+          this->nrpret_antrenori_catarat=nrpret_antrenori_catarat;
+          this->pret_antrenori_catarat=new int[nrpret_antrenori_catarat+1];
+          for(int i=0;i<nrpret_antrenori_catarat;i++)
+            this->pret_antrenori_catarat[i]=pret_antrenori_catarat[i];
+
+            this->nrpret_antrenori=nrpret_antrenori_sala;
+
+        this->pret_antrenori_sala=new int[nrpret_antrenori_sala+1];
+        for(int i=0;i<nrpret_antrenori_sala;i++)
+            this->pret_antrenori_sala[i]=pret_antrenori_sala[i];
+
+            this->nrpret_antrenori_inot=nrpret_antrenori_inot;
+          this->pret_antrenori_inot=new int[nrpret_antrenori_inot+1];
+          for(int i=0;i<nrpret_antrenori_inot;i++)
+            this->pret_antrenori_inot[i]=pret_antrenori_inot[i];
+      }
+      antrenori(const int m,int n)
+      {
+          this->m=m;
+          this->n=n;
+      }
+
+      void set_nr(int nr)
+      {
+          this->nr=nr;
+      }
+      void afis_antrenori_inot()
+      {
+          int i=0;
+          cout<<"_______________________________________________________________________________"<<endl;
+          cout<<"|                              "<<nume_antrenori_inot[i]<<"                                    |"<<endl;
+          cout<<"|______________________________________________________________________________|"<<endl;
+          cout<<"|                                                                              |"<<endl;
+          cout<<"|   Este studenta in cadrul ''Universitatii Nationale de Educatie Fizica si    |"<<endl;
+          cout<<"|Sport'' din Bucuresti si sportiva de performanta a''Clubului Sportiv Bluema-  |"<<endl;
+          cout<<"|rim''.                                                                        |"<<endl;
+          cout<<"|Campioana mondiala Aquabike - Spania 2019                                     |"<<endl;
+          cout<<"|Campioana europeana Aquabike - Targu Mures 2019                               |"<<endl;
+          cout<<"|Multipla campioana nationala - Natatie (peste 250 de medalii);                |"<<endl;
+          cout<<"|4 x Campioana balcanica - Triatlon;                                           |"<<endl;
+          cout<<"|Locul 5 - Cupa Europeana - Triatlon;                                          |"<<endl;
+          cout<<"Primul sportiv roman calificat intr-o etapa finala a unui Campionat Mondial –  |"<<endl;
+          cout<<"triatlon;                                                                      |"<<endl;
+          cout<<"|Pret:"<<pret_antrenori_inot[i]<<"lei (2 antrenamente pe saptamana timp de o luna)                      |"<<endl;
+          cout<<"|______________________________________________________________________________|"<<endl;
+          cout<<endl<<endl;
+          i++;
+          cout<<"_______________________________________________________________________________"<<endl;
+          cout<<"|                              "<<nume_antrenori_inot[i]<<"                                    |"<<endl;
+          cout<<"|______________________________________________________________________________|"<<endl;
+          cout<<"|                                                                              |"<<endl;
+          cout<<"|   A practicat inotul si polo-ul pe apa timp de 10 ani, la echipe precum Stea-|"<<endl;
+          cout<<"|ua (juniori) si Rapid (seniori), unde a reusit sa obtina numeroase titluri de |"<<endl;
+          cout<<"|campion national, vice-campion si alte titluri municipale.                    |"<<endl;
+          cout<<"|Pe langa acestea se regasesc numeroasele participari la competitiile desfasu- |"<<endl;
+          cout<<"|rate atat pe plan national, cat si international.                             |"<<endl;
+          cout<<"|Ulterior am reusit sa dobandesc urmatoarele calificari:                       |"<<endl;
+          cout<<"|ANTRENOR INOT                                                                 |"<<endl;
+          cout<<"|INSTRUCTOR INOT                                                               |"<<endl;
+          cout<<"|INSTRUCTOR POLO PE APA                                                        |"<<endl;
+          cout<<"|SALVAMAR                                                                      |"<<endl;
+          cout<<"|Pret:"<<pret_antrenori_inot[i]<<"lei (2 antrenamente pe saptamana timp de o luna)                      |"<<endl;
+          cout<<"|______________________________________________________________________________|"<<endl;
+      }
+      void afis_antrenori_catarat()
+      {
+          int i=0;
+          cout<<"_______________________________________________________________________________"<<endl;
+          cout<<"|                              "<<nume_antrenori_escalada[i]<<"                                    |"<<endl;
+          cout<<"|______________________________________________________________________________|"<<endl;
+          cout<<"|                                                                              |"<<endl;
+          cout<<"|   Este antrenor al lotului national de copii si juniori.''In 1985, am pus ba-|"<<endl;
+          cout<<"|zele Alpin Club Carpatic, un club montan care, spre marea mea satisfactie, da |"<<endl;
+          cout<<"|si azi cele mai bune rezultate în concursurile nationale si internationale de |"<<endl;
+          cout<<"|copii si junior''.                                                            |"<<endl;
+          cout<<"|Pret:"<<pret_antrenori_catarat[i]<<"lei (4 antrenamente pe saptamana timp de o luna)                      |"<<endl;
+          cout<<"|______________________________________________________________________________|"<<endl;
+          cout<<endl<<endl;
+          i++;
+          cout<<"_______________________________________________________________________________"<<endl;
+          cout<<"|                              "<<nume_antrenori_escalada[i]<<"                                  |"<<endl;
+          cout<<"|______________________________________________________________________________|"<<endl;
+          cout<<"|                                                                              |"<<endl;
+          cout<<"|   Este instructor si antrenor de alpinism si escalada, si presedintele Fede- |"<<endl;
+          cout<<"|ratiei Romane de Alpinism si Escalada. Este singurul alpinist roman ce a atins|"<<endl;
+          cout<<"|doua varfuri de peste 8.000 de metri intr-un singur an (2014), iar în 2017, a |"<<endl;
+          cout<<"|reusit ascensiunea vf. Everest.                                               |"<<endl;
+          cout<<"|Pret:"<<pret_antrenori_catarat[i]<<"lei (4 antrenamente pe saptamana timp de o luna)                      |"<<endl;
+          cout<<"|______________________________________________________________________________|"<<endl;
+
+      }
+      void afis_antrenori_sala()
+      {
+          int i=0;
+          cout<<"________________________________________________________________________________"<<endl;
+          cout<<"|                             "<<nume_antrenori_sala[i]<<"                                        |"<<endl;
+          cout<<"|_______________________________________________________________________________|"<<endl;
+          cout<<"|   Antrenor personal cu un deceniu de experienta, nu isi vede viata profesio-  |"<<endl;
+          cout<<"|nala altfel decat dedicata fitnessului si stilului de viata sanatos. Este      |"<<endl;
+          cout<<"|antrenorul personal care iti garanteaza ca, in numai trei luni,vei deveni alt  |"<<endl;
+          cout<<"|om odata ce incepi lucrul cu el in sala de fitness si este gata sa iti promita |"<<endl;
+          cout<<"|ca vei avea rezultate excelente daca vei fi riguros, serios si dedicat.        |"<<endl;
+          cout<<"|                                                                               |"<<endl;
+          cout<<"|**CERTIFICARI**                                                                |"<<endl;
+          cout<<"|Licentiat in Atletism la Facultatea de Educatie Fizica si Sport                |"<<endl;
+          cout<<"|Antrenor personal acreditat                                                    |"<<endl;
+          cout<<"|                                                                               |"<<endl;
+          cout<<"|**SPECIALIZARI**                                                               |"<<endl;
+          cout<<"|Programe pentru hipertrofie musculara;                                         |"<<endl;
+          cout<<"|Programe de antrenament cardio;                                                |"<<endl;
+          cout<<"|Antrenament functional;                                                        |"<<endl;
+          cout<<"|Bodybuilding;                                                                  |"<<endl;
+          cout<<"|Programe pentru tonifiere si scadere in greutate.                              |"<<endl;
+          cout<<"|Pret:"<<pret_antrenori_sala[i]<<"lei (4 antrenamente pe saptamana timp de o luna)                       |"<<endl;
+          cout<<"|_______________________________________________________________________________|"<<endl;
+
+          cout<<endl;
+          cout<<endl;
+          i++;
+          cout<<"________________________________________________________________________________"<<endl;
+          cout<<"|                            "<<nume_antrenori_sala[i]<<"                                      |"<<endl;
+          cout<<"|_______________________________________________________________________________|"<<endl;
+          cout<<"|   A intrat in lumea fitnessului acum mai bine de un deceniu pentru a isi con- |"<<endl;
+
+          cout<<"|strui un stil de viata mai sanatos si mai activ. Inregistreaza rezultate deose-|"<<endl;
+          cout<<"|bite atat cu incepatori in domeniul fitnessului, cat si cu clienti foarte expe-|"<<endl;
+          cout<<"|rimentati in lucrul in sala, avand o conditie fizica foarte buna.              |"<<endl;
+          cout<<"|                                                                               |"<<endl;
+          cout<<"|**CERTIFICARI**                                                                |"<<endl;
+          cout<<"|Antrenor personal acreditat.                                                   |"<<endl;
+          cout<<"|                                                                               |"<<endl;
+          cout<<"|**SPECIALIZARI**                                                               |"<<endl;
+          cout<<"|Programe pentru hipertrofie musculara;                                         |"<<endl;
+          cout<<"|Programe pentru scadere în greutate;                                           |"<<endl;
+          cout<<"|Programe de modelare musculara.                                                |"<<endl;
+          cout<<"|Pret:"<<pret_antrenori_sala[i]<<"lei (4 antrenamente pe saptamana timp de o luna)                       |"<<endl;
+          cout<<"|_______________________________________________________________________________|"<<endl;
+          cout<<endl<<endl;
+          i++;
+          cout<<"________________________________________________________________________________"<<endl;
+          cout<<"|                            "<<nume_antrenori_sala[i]<<"                                          |"<<endl;
+          cout<<"|_______________________________________________________________________________|"<<endl;
+          cout<<"|   Adora sa lucreze cu oamenii si sa le impartaseasca din experienta acumulata |"<<endl;
+          cout<<"|in cei zece ani petrecuti in fitness, timp in care si-a transformat pasiunea in|"<<endl;
+          cout<<"|profesie.''Va fi nevoie de timp,dedicatie, dorinta si sacrificiu. O sa existe  |"<<endl;
+          cout<<"|tentatie. Dar iti promit ca va merita cand iti vei atinge telul!'', spune Ana. |"<<endl;
+          cout<<"|                                                                               |"<<endl;
+          cout<<"|**CERTIFICARI**                                                                |"<<endl;
+          cout<<"|Antrenor personal acreditat, Level 2;                                          |"<<endl;
+          cout<<"|Instructor de aerobic acreditat pentru programe Les Mills: BodyPump, BodyCombat|"<<endl;
+          cout<<"|Instructor Aquashape acreditat;                                                |"<<endl;
+          cout<<"|                                                                               |"<<endl;
+          cout<<"|**SPECIALIZARI**                                                               |"<<endl;
+          cout<<"|Programe de antrenament cardio;                                                |"<<endl;
+          cout<<"|Programe pentru hipertrofie musculara;                                         |"<<endl;
+          cout<<"|Programe pentru scadere in greutate;                                           |"<<endl;
+          cout<<"|Pret:"<<pret_antrenori_sala[i]<<"lei (4 antrenamente pe saptamana timp de o luna)                       |"<<endl;
+          cout<<"|_______________________________________________________________________________|"<<endl;
+
+
+
+      }
+      friend istream& operator>> (istream& in,  antrenori& citire)
+      {
+          in>>citire.tasta;
+          return in;
+      }
+
+        friend ostream& operator<< (ostream& out,antrenori& pro)       ///operator <<
+      {
+          cout<<"Pentru a vedea antrenorii de fitness apasa tasta 1"<<endl;
+          cout<<"Pentru a vedea antrenorii de catarat apasa tasta 2"<<endl;
+          cout<<"Pentru a vedea antrenorii de inot apasa tasta 3"<<endl;
+          return out;
+      }
+
+       friend ifstream& operator>> (ifstream& inn,  antrenori& citire)
+      {
+          inn>>citire.tasta;
+          return inn;
+      }
+
+        friend ofstream& operator<< (ofstream& outt,antrenori& pro)       ///operator <<
+      {
+          outt<<"Pentru a vedea antrenorii de fitness apasa tasta 1"<<endl;
+          outt<<"Pentru a vedea antrenorii de catarat apasa tasta 2"<<endl;
+          outt<<"Pentru a vedea antrenorii de inot apasa tasta 3"<<endl;
+          return outt;
+      }
+
+      int afis_tasta()   ///gettle
+      {
+          return this->tasta;
+      }
+      int ff()
+      {
+          return 33;
+      }
+      void verificare()
+      {
+          if (tasta>3 or tasta <1)
+            cout<<"ATI INTRODUS TASTA GRESITA!"<<endl;
+      }
+      antrenori(const antrenori& citire)
+	 {
+         this->pret_antrenori_sala = new int[3];
+              for(int i = 0; i < 3; i++)
+                this->pret_antrenori_sala[i] = citire.pret_antrenori_sala[i];
+
+            this->pret_antrenori_inot = new int[2];
+            for(int i = 0; i < 2; i++)
+                this->pret_antrenori_inot[i] = citire.pret_antrenori_inot[i];
+
+            this->pret_antrenori_catarat = new int[2];
+            for(int i = 0; i < 2; i++)
+                this->pret_antrenori_catarat[i] = citire.pret_antrenori_catarat[i];
+
+            this->nrpret_antrenori = citire.nrpret_antrenori;
+            this->nrpret_antrenori_inot = citire.nrpret_antrenori_inot;
+            this->tasta=citire.tasta;
+
+	}
+
+	  antrenori& operator =(const antrenori& cop)    ///OPERATOR "="
+      {
+
+          if(this!=&cop)
+          {
+              this->pret_antrenori_sala = new int[3];
+              for(int i = 0; i < 3; i++)
+                this->pret_antrenori_sala[i] = cop.pret_antrenori_sala[i];
+
+            this->pret_antrenori_inot = new int[2];
+            for(int i = 0; i < 2; i++)
+                this->pret_antrenori_inot[i] = cop.pret_antrenori_inot[i];
+
+            this->pret_antrenori_catarat = new int[2];
+            for(int i = 0; i < 2; i++)
+                this->pret_antrenori_catarat[i] = cop.pret_antrenori_catarat[i];
+
+            this->nrpret_antrenori = cop.nrpret_antrenori;
+            this->nrpret_antrenori_inot = cop.nrpret_antrenori_inot;
+            this->tasta=cop.tasta;
+
+          }
+      }
+
+      ~antrenori()    ///destructor
+      {
+          ///DOAR CE E CU NEW
+          if(this->pret_antrenori_catarat!=NULL)
+              delete[] this->pret_antrenori_catarat;
+          if(this->pret_antrenori_sala!=NULL)
+              delete[] this->pret_antrenori_sala;
+            if(this->pret_antrenori_inot!=NULL)
+              delete[] this->pret_antrenori_inot;
+
+      }
+
+
+};
+class mostenesc_antrenori : public antrenori
+{
+    private:
+        char *numele,*prenumele,*email,*num;
+    public:
+
+            mostenesc_antrenori()
+            {
+                numele=new char[strlen("Anonim")+1];
+                strcpy(this->numele,"Anonim");
+                prenumele=new char[strlen("anonimus")+1];
+                strcpy(this->prenumele,"anonimus");
+
+            }
+              friend ostream& operator<< (ostream& out,mostenesc_antrenori& pro)       ///operator <<
+          {
+              cout<<"Esti nou in echipa noastra si nu ai mai fost la noi? "<<endl;
+              cout<<"Ai o sedinta gratuita la orice vrei tu! ( sala,escalada,bazin)!!! "<<endl;
+              return out;
+          }
+
+               friend istream& operator>> (istream& in,mostenesc_antrenori& pro)       ///operator <<
+          {
+              in>>pro.numele>>pro.prenumele;
+              cout<<"email : ";
+              in>>pro.email;
+              return in;
+          }
+              friend ofstream& operator<< (ofstream& outt,mostenesc_antrenori& pro)       ///operator <<
+          {
+              outt<<"Esti nou in echipa noastra si nu ai mai fost la noi? "<<endl;
+              outt<<"Ai o sedinta gratuita la orice vrei tu! ( sala,escalada,bazin)!!! "<<endl;
+              return outt;
+          }
+
+               friend ifstream& operator>> (ifstream& inn,mostenesc_antrenori& pro)       ///operator <<
+          {
+              inn>>pro.numele>>pro.prenumele;
+              return inn;
+          }
+
+             void afis_antrenori_sala()   ///va afisa ce am scris jos, nu ce este in clasa parinte
+             {
+                 cout<<"Tot ce trebuie sa faci este sa iti scrii numele aici,"<<endl;
+                 cout<<"iar noi te vom adauga in baza noastra de date!"<<endl;
+                 cout<<"Cand veti ajunge la clubul nostru, noi ne vom asigura ca iti vei primii sedinta gratuita! "<<endl;
+                 cout<< "Introduceti numele apoi prenumele:  "<<endl;
+
+             }
+             void felicitari()
+             {
+                 cout<<"FELICITARI," << prenumele <<"! Oficial ai castigat o sedinta gratuita la noi! Te asteptam !"<<endl;
+
+             }
+             char* afis_email()
+             {
+                 return email;
+             }
+            char* afis_nume()
+            {
+
+
+                return numele;
+            }
+            char* afis_prenume()
+            {
+                return prenumele;
+            }
+               ~mostenesc_antrenori()
+            {
+
+
+                    if(this->numele!=NULL)
+                        delete[] this->numele;
+                   if(this->numele!=NULL)
+                        delete[] this->prenumele;
+  //                  cout<<"destructor";
+
+
+            }
+
+};
+
+class program
+{
+private:
+    const int tasta9;
+    char* ora1start;
+    char* ora1final;
+    char* ora2start;
+    char* ora2final;
+    char* orabazins;
+    char* orabazinf;
+    int nrbazinele=2;
+    int *lungimebazin;
+    char *text="In zilele de sarbatoare programul poate sa difere";
+
+    float latime,latimep,adancime,adancimep,lungime,lungimep,latimecopii,lungimecopii,adancimecopii;
+    char tastare;
+    int nrtotalcatarat;
+    double volumbazin,volumpiscinaADULTI,volumpiscinaCOPII;
+    int nr_sali=2;
+    char tipsauna1[100] = "cu abur";
+    char tipsauna2[100] = "uscate";
+    static int nrsaune;
+    bool Bnrsaune;
+    int nrtotalpiscine=5;
+    int tasta6;
+    int tasta7,tasta8;
+    int nrbazine=2;
+    int nrpiscine=3;
+    int k=1;
+public:
+    program ():tasta9(9)
+     {}    ///constructor fara paramentru
+
+    program(const int tasta6, int tasta7, int tasta8,int tasta9):tasta9(9)
+    {
+        this->tasta6=tasta6;
+        this->tasta7=tasta7;
+        this->tasta8=tasta8;
+
+
+    }
+    char* afis_text()
+    {
+        return text;
+    }
+    program operator + (program const &obj) {
+         program r;
+         r.nrbazinele = nrbazinele+ obj.nrbazinele;
+         return r;
+    }
+    void afisare()
+    {
+        cout<<nrbazinele;
+    }
+
+    void operator--()
+    {
+        k--;
+    }
+     char operator[](int i) {
+         if( i < 5) {
+
+           return ora2start[i];
+
+         }
+         else
+            cout<<"NU MERGE";
+
+
+      }
+
+    friend ostream& operator<< (ostream& out,const program& pro)       ///operator <<
+    {
+        out<<"Pentru a vedea programul salii de fitness SUN GYM BUCURESTI apasati tasta "<<pro.tasta6<<endl;
+        out<<"Pentru a vedea programul de la piscina apasati tasta "<<pro.tasta7<<endl;
+        out<<"Pentru a vedea programul de la sauna apasati tasta "<<pro.tasta8<<endl;
+        out<<"Pentru a vedea programul de la sala de catarat apasati tasta "<<pro.tasta9<<endl;
+
+        return out;
+    }
+        friend ofstream& operator<< (ofstream& outt,const program& pro)       ///operator <<
+    {
+        outt<<"Pentru a vedea programul salii de fitness SUN GYM BUCURESTI apasati tasta "<<pro.tasta6<<endl;
+        outt<<"Pentru a vedea programul de la piscina apasati tasta "<<pro.tasta7<<endl;
+        outt<<"Pentru a vedea programul de la sauna apasati tasta "<<pro.tasta8<<endl;
+        outt<<"Pentru a vedea programul de la sala de catarat apasati tasta "<<pro.tasta9<<endl;
+
+        return outt;
+    }
+
+
+    friend istream& operator>> (istream& in,  program& citire)    ///Operator>>
+    {
+        in>>citire.tastare;
+
+        return in;
+    }
+    friend ifstream& operator>> (ifstream& inn,  program& citire)    ///Operator>>
+    {
+        inn>>citire.tastare;
+
+        return inn;
+    }
+    int afis_ce_e_citit()
+    {
+        return this->tastare;
+    }
+
+    static void mesajsauna()
+    {
+        cout<<"SUN GYM detine "<<nrsaune<< " saune!"<<endl;
+    }
+    void mesaj_cate_sali()
+    {
+        cout<<"Clubul nostru contine"<<nr_sali<<"de sali!"<<endl;
+        cout<<"O sala mare cu aparate si inca o sala pentru aerobic!"<<endl;
+    }
+    void volumBAZIN(int *lungimebazin)
+    {
+
+           this->lungime=lungimebazin[0];
+           this->latime=lungimebazin[1];
+           this->adancime=lungimebazin[2];
+           this->volumbazin=lungimebazin[0]*lungimebazin[1]*lungimebazin[2];;
+    }
+
+    void volumPISCINAadulti(float lungimee, float latime, float adancime,double volumbazin)
+    {
+        this->lungimep=lungimee;
+        this->latimep=latime;
+        this->adancimep=adancime;
+        this->volumpiscinaADULTI=latime*lungimee*adancime;
+
+    }
+
+    void volumPISCINAcopii(float lungime, float latime, float adancime,double volumbazin)
+    {
+        this->lungimecopii=lungime;
+        this->latimecopii=latime;
+        this->adancimecopii=adancime;
+        this->volumpiscinaCOPII=latime*lungime*adancime;
+    }
+
+   void mesajbazin()
+    {
+       int x=nrbazine+nrpiscine;
+        Bnrsaune= x==nrtotalpiscine;
+        if(Bnrsaune==1)
+        {
+        cout<<"SUN GYM detine " <<nrbazine << " bazine de innot si "<<nrpiscine<< " piscine"<<endl;
+        cout<<"Bazinele de innot au o lungime de  : "<<lungime<<"m"<<endl;
+        cout<<"                       latime de   : "<<latime<<"m"<<endl;
+        cout<<"                       adancime de : "<<adancime<<"m"<<endl;
+        cout<<"Volumul unu bazin avand "<<volumbazin<<" m^3"<<endl;
+
+        cout<<endl;
+        cout<<"Cele doua pisine pentru adulti  au o lungime de  : "<<lungimep<<"m"<<endl;
+        cout<<"                                     latime de   : "<<latimep<<"m"<<endl;
+        cout<<"                                     adancime de : "<<adancimep<<"m"<<endl;
+        cout<<"Volumul unei piscine avand "<<volumpiscinaADULTI<<" m^3"<<endl;
+        cout<<endl;
+        cout<<"Piscina pentru copii are o lungime de  : "<<lungimecopii<<"m"<<endl;
+        cout<<"                          latime de   : "<<latimecopii<<"m"<<endl;
+        cout<<"                          adancime de : "<<adancimecopii<<"m"<<endl;
+        cout<<"Volumul unei piscine avand "<<volumpiscinaCOPII<<" m^3"<<endl;
+        cout<<endl;
+         }
+    }
+
+    void setareora1(char* o,char* oo ) /// de luni pana vineri , SETTLE
+    {
+        ora1start=new char[strlen(o)+1];
+        strcpy(ora1start,o);
+        ora1final=new char[strlen(oo)+1];
+        strcpy(ora1final,oo);
+    }
+
+    void setareora2(char* o,char* oo )   /// de sambata pana duminica , SETTLE
+    {
+        ora2start=new char[strlen(o)+1];
+        strcpy(ora2start,o);
+
+        ora2final=new char[strlen(oo)+1];
+        strcpy(ora2final,oo);
+
+    }
+
+    void setareorabazin(char* a,char* aa)
+    {
+        orabazins=new char[strlen(a)+1];
+        strcpy(orabazins,a);
+
+        orabazinf=new char[strlen(aa)+1];
+        strcpy(orabazinf,aa);
+
+
+    }
+
+    void setnrtotalcatarat(int x)
+    {
+        this->nrtotalcatarat=x;
+
+    }
+
+    int NRtotalcatarat()  ///gettle
+    {
+        return this->nrtotalcatarat;
+    }
+
+    /// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!AFISARILE
+    const void afisprogramsala()    ///SALA
+    {
+        cout<<"PROGRAM SALA"<<endl;
+        const char *zilele[7] = {"LUNI", "MARTI","MIERCURI", "JOI","VINERI","SAMBATA","DUMINICA"};
+        for (int i=0; i<7; i++)
+        {
+            if(i<=4)
+            {
+                cout<<"In ziua de "<<zilele[i]<< " programul este de la "<<ora1start<<" la "<<ora1final<<endl;
+
+            }
+            if(i>4)
+            {
+                cout<<"In ziua de "<<zilele[i]<< " programul este de la "<<ora2start<<" la "<<ora2final<<endl;
+            }
+        }
+    }
+
+
+
+    void afisprogramsauna()    ///SAUNA
+    {
+        // cout<<"Clubul nostru contine"<<nrsaune<<"saune "<<endl;
+        cout<<"O sauna "<<tipsauna1<<" si doua saune "<<tipsauna2<<endl;
+        cout<<"PROGRAM SAUNA    "<<endl;
+
+        //        cout<<"SUN GYM detine "<<sauna.saune()<<" saune!"<<endl;
+        const char *zilele[7] = {"LUNI", "MARTI","MIERCURI", "JOI","VINERI","SAMBATA","DUMINICA"};
+        for (int i=0; i<7; i++)
+        {
+            if(i<=4)
+            {
+                cout<<"In ziua de "<<zilele[i]<< " programul este de la "<<ora1start<<" la "<<ora1final<<endl;
+
+            }
+            if(i>4)
+            {
+                cout<<"In ziua de "<<zilele[i]<< " programul este de la "<<ora2start<<" la "<<ora2final<<endl;
+            }
+        }
+    }
+
+    void afisprogrambazin()     ///piscina
+    {
+        const char *zilele[7] = {"LUNI", "MARTI","MIERCURI", "JOI","VINERI","SAMBATA","DUMINICA"};
+        cout<<"PROGRAM BAZIN "<<endl;
+
+
+        for (int i=0; i<7; i++)
+        {
+            if(i<=4)
+            {
+                cout<<"In ziua de "<<zilele[i]<< " programul este de la "<<orabazins<<" la "<<orabazinf<<endl;
+
+            }
+            if(i>4)
+            {
+                cout<<"In ziua de "<<zilele[i]<< " programul este de la "<<orabazins<<" la "<<orabazinf<<endl;
+            }
+        }
+        cout<<endl;
+        cout<<"PROGRAM PISCINA"<<endl;
+        for (int i=0; i<7; i++)
+        {
+            if(i<=4)
+            {
+                cout<<"In ziua de "<<zilele[i]<< " programul este de la "<<ora1start<<" la "<<ora1final<<endl;
+
+            }
+            if(i==5)
+            {
+                cout<<"In ziua de "<<zilele[i]<< " programul este de la "<<ora2start<<" la "<<ora2final<<endl;
+            }
+            if(i==6)
+            {
+                cout<<"In ziua de "<<zilele[i]<< " INCHIS!"<<endl;
+            }
+        }
+
+    }
+
+    void afiscatarat()     ///CATARAT
+    {
+        const char *zilele[7] = {"LUNI", "MARTI","MIERCURI", "JOI","VINERI","SAMBATA","DUMINICA"};
+        cout<<"PROGRAM CATARAT "<<endl;
+
+        int i;
+        for (i=k; i<7; i++)
+        {
+            if(i<=4)
+            {
+                cout<<"In ziua de "<<zilele[i]<< " programul este de la "<<ora1start<<" la "<<ora1final<<endl;
+
+            }
+            if(i>4)
+            {
+                cout<<"In ziua de "<<zilele[i]<< " programul este de la "<<ora2start<<" la "<<ora2final<<endl;
+            }
+        }
+        cout<<endl;
+
+    }
+
+
+   program& operator =(const program citire)   ///OPERATOR "="
+    {
+        if(this!=&citire)
+        {
+
+            this->tastare=citire.tastare;
+            this->nrpiscine=citire.nrpiscine;
+            this->nrtotalcatarat=citire.nrtotalcatarat;
+            this->volumpiscinaADULTI=citire.volumpiscinaADULTI;
+            this->volumbazin=citire.volumbazin;
+            this->volumpiscinaCOPII=citire.volumpiscinaCOPII;
+            this->nrsaune=citire.nrsaune;
+            this->nr_sali=citire.nr_sali;
+            this->tasta7=citire.tasta7;
+            this->tasta8=citire.tasta8;
+            this->nrsaune=citire.nrsaune;
+            this->nrbazine=citire.nrbazine;
+            this-> latime=citire.latime;
+            this->latimep=citire.latimep;
+            this->adancime=citire.adancime;
+            this->lungime=citire.lungime;
+            this->lungimep=citire.lungimep;
+            this->latimecopii=citire.latimecopii;
+            this->lungimecopii=citire.lungimecopii;
+            this->adancimecopii=citire.adancimecopii;
+
+
+            this-> ora1start=new char[strlen(citire. ora1start)+1];
+            strcpy(this-> ora1start,citire.ora1start);
+
+
+            this->ora2start=new char[strlen(citire.ora2start)+1];
+            strcpy(this->ora2start,citire.ora2start);
+
+
+            this->ora1final=new char[strlen(citire.ora1final)+1];
+            strcpy(this->ora1final,citire.ora1final);
+
+            this->ora2final=new char[strlen(citire.ora2final)+1];
+            strcpy(ora2final,citire.ora2final);
+
+            this->orabazins=new char[strlen(citire.orabazins)+1];
+            strcpy(orabazins,citire.orabazins);
+
+            this->orabazinf=new char[strlen(citire.orabazinf)+1];
+            strcpy(orabazinf,citire.orabazinf);
+
+        }
+        return *this;
+
+    }
+
+
+     program(const program& copiaza):tasta9(copiaza.tasta9),tasta7(copiaza.tasta7)
+    {
+            this->tastare=copiaza.tastare;
+            this->nrtotalcatarat=copiaza.nrtotalcatarat;
+            this->volumpiscinaADULTI=copiaza.volumpiscinaADULTI;
+            this->volumbazin=copiaza.volumbazin;
+            this->volumpiscinaCOPII=copiaza.volumpiscinaCOPII;
+            this->latime=copiaza.latime;
+            this->latimep=copiaza.latimep;
+            this->adancime=copiaza.adancime;
+            this->lungime=copiaza.lungime;
+            this->lungimep=copiaza.lungimep;
+            this->latimecopii=copiaza.latimecopii;
+            this->lungimecopii=copiaza.lungimecopii;
+            this->adancimecopii=copiaza.adancimecopii;
+
+            this-> ora1start=new char[strlen(copiaza.ora1start)+1];
+            strcpy(this->ora1start,copiaza.ora1start);
+
+
+            this->ora2start=new char[strlen(copiaza.ora2start)+1];
+            strcpy(this->ora2start,copiaza.ora2start);
+
+
+            this->ora1final=new char[strlen(copiaza.ora1final)+1];
+            strcpy(this->ora1final,copiaza.ora1final);
+
+            this->ora2final=new char[strlen(copiaza.ora2final)+1];
+            strcpy(ora2final,copiaza.ora2final);
+
+            this->orabazins=new char[strlen(copiaza.orabazins)+1];
+            strcpy(orabazins,copiaza.orabazins);
+
+            this->orabazinf=new char[strlen(copiaza.orabazinf)+1];
+            strcpy(orabazinf,copiaza.orabazinf);
+    }
+
+
+
+
+
+
+      ~program()    ///destructor
+      {
+
+
+          ///DOAR CE E CU NEW
+          if(this->ora1start!=NULL)
+              delete[] this->ora1start;
+          if(this->ora1final!=NULL)
+              delete[] this->ora1final;
+          if(this->ora2start!=NULL)
+              delete[] this->ora2start;
+          if(this->ora2final!=NULL)
+              delete[] this->ora2final;
+          if(this->orabazins!=NULL)
+              delete[] this->orabazins;
+          if(this->orabazinf!=NULL)
+              delete[] this->orabazinf;
+
+      }
+      void afis_vaasteptam()
+      {
+          cout<< "ECHIPA NOASTRA TE ASTEPTA! ";
+      }
+
+
+      bool operator==(program& s1)
+      {
+          if (nrbazine==nrpiscine)
+            return true;
+          else
+            return false;
+      }
+      bool operator<=(program& s1)
+      {
+          if (nrbazine<=nrpiscine)
+            return true;
+          else
+            return false;
+      }
+       explicit operator int()
+      {
+          return (int)this->lungimep;
+      }
+    void copia()
+    {
+        cout<<tasta7;
+    }
+
+};
+
+int program::nrsaune=3;  ///    PT SAUNA
+
+///interfata
+class contact
+{
+    public:
+       virtual void afis_contact1()=0;
+       virtual void afis_contact2()=0;
+
+};
+class mostenire_contact1: public contact{
+
+    public:
+      void afis_contact1()
+        {
+            cout<<"~~~~~~~~~~~CONTACT~~~~~~~~~~~"<<endl;
+        }
+       virtual  void afis_contact2()
+        {
+            cout<<"          Telefon:"<<endl;
+            cout<<"        0735 221 523"<<endl;
+            cout<<"        021 313 5114"<<endl<<endl;
+            cout<<"          E-mail:"<<endl;
+            cout<<"        contact@SUNGYM.ro"<<endl<<endl;
+            cout<<"         Locatia noastra:"<<endl;
+            cout<<" Splaiul Independentei 319A, Bucuresti, sect. 6, in incinta Sema Parc (statia de metrou Petrache Poenaru)"<<endl<<endl;
+
+        }
+
+};
+class mostenire_contact2: public mostenire_contact1{
+
+    public:
+        void afis_contact2()
+        {
+            cout<<"         PROGRAM RELATII CLIENTI       "<<endl;
+            cout<<" LUNI-VINERI  ----------> 10:00 - 19:00"<<endl;
+            cout<<" SAMBATA-DUMINICA ------> 12:00 -  15:00"<<endl;
+        }
+
+        void afis_contact1()
+        {
+            cout<<"~~fdsfdsfdfd~~~"<<endl;
+        }
+};
+
+class abonamente{
+
+    public:
+            virtual void  afis_abonamente_fitness()=0;
+            virtual void  afis_abonamente_escalada()=0;
+            virtual void  afis_abonamente_sauna()=0;
+            virtual  void  afis_abonamente_bazin()
+            {
+                 cout<<"baze"<<endl;
+            }
+            friend ostream& operator <<(ostream& out, const abonamente &p)
+            {
+                out<<"ABONAMENTELE NU SE POT CUMPARA ONLINE, DOAR FIZIC LA CLUBUL NOSTRU!"<<endl<<endl;
+                return out;
+            }
+            friend ofstream& operator <<(ofstream& outt, const abonamente &p)
+            {
+                outt<<"ABONAMENTELE NU SE POT CUMPARA ONLINE, DOAR FIZIC LA CLUBUL NOSTRU!"<<endl<<endl;
+                return outt;
+            }
+
+            ~abonamente()
+            {
+              /// cout<<"destructor!";
+            }
+            void afis_multu()
+            {
+                cout<<"Va multumim!";
+            }
+};
+
+class mostenire_abonamente: public abonamente
+{
+  public:
+    void  afis_abonamente_fitness()
+    {
+        cout<<"______________________________________________________________________________"<<endl;
+        cout<<"|ABONEMENTE FITNESS                                                           |"<<endl;
+        cout<<"|_____________________________________________________________________________|"<<endl;
+        cout<<"|ABONAMENT FITNESS                                                            |"<<endl;
+        cout<<"|Abonamentul include: Acces sala fitness,1 luna ----->99 lei                  |"<<endl<<"|                                                                             |"<<endl;
+        cout<<"|FULL DAY PASS:                                                               |"<<endl;
+        cout<<"|1 zi de acces fitness si sauna                                               |"<<endl<<"|                                                                             |"<<endl;
+        cout<<"|ABONAMENT HALF MONTH                                                         |"<<endl;
+        cout<<"|Abonamentul include: Acces sala fitness  2 saptamani -------> 60 lei         |"<<endl<<"|                                                                             |"<<endl;
+        cout<<"|ABONAMENT EXTRA HALF MONTH                                                   |"<<endl;
+        cout<<"|Abonamentul include: Acces sala fitness + sauna 2 saptamani -------> 70 lei  |"<<endl<<"|                                                                             |"<<endl;
+        cout<<"|ABONAMENT ELEV                                                               |"<<endl;
+        cout<<"|Abonamentul include: Acces sala fitness 1 luna ------> 70 lei                |"<<endl;
+        cout<<"|_____________________________________________________________________________|"<<endl;
+    }
+    void afis_abonamente_escalada()
+    {
+        cout<<"______________________________________________________________________________"<<endl;
+        cout<<"|ABONEMENTE ESCALADA                                                          |"<<endl;
+        cout<<"|_____________________________________________________________________________|"<<endl;
+        cout<<"|                                      Adult	     Copii (<16 ani)          |"<<endl;
+        cout<<"|1 INTR. (FULL DAY)	              45 lei           	35 lei                |"<<endl;
+        cout<<"|1 INTR. LA PANOUL DE COPII  L-V:        -              20 lei                |"<<endl;
+        cout<<"|4 INTR. / LUNA LA PANOUL DE COPII       -            	75 lei                |"<<endl;
+        cout<<"|6 INTR. (VAL. 1 LUNA)	              170 lei	        150 lei               |"<<endl;
+        cout<<"|10 INTR. (VAL. 2 LUNI)	              280 lei	        260 lei               |"<<endl;
+        cout<<"|_____________________________________________________________________________|"<<endl;
+    }
+    void afis_abonamente_sauna()
+    {
+        cout<<"_________________________________________________________________________"<<endl;
+        cout<<"|ABONEMENTE SAUNA                                                        |"<<endl;
+        cout<<"|________________________________________________________________________|"<<endl;
+        cout<<"|Abonament sauna 1 luna      --------> 70lei                             |"<<endl;
+        cout<<"|Abonament sauna 2 saptamani --------> 40lei                             |"<<endl;
+        cout<<"|________________________________________________________________________|"<<endl;
+
+    }
+    void  afis_abonamente_bazin()
+    {
+        cout<<"______________________________________________________________________________"<<endl;
+        cout<<"|ABONEMENTE BAZIN                                                             |"<<endl;
+        cout<<"|_____________________________________________________________________________|"<<endl;
+        cout<<"|                                      Adult	     Copii (<16 ani)          |"<<endl;
+        cout<<"|1 INTR. (FULL DAY)	              35 lei           	30 lei                |"<<endl;
+        cout<<"|6 INTR. (VAL. 1 LUNA)	              170 lei	        150 lei               |"<<endl;
+        cout<<"|10 INTR. (VAL. 2 LUNI)	              280 lei	        260 lei               |"<<endl;
+        cout<<"|_____________________________________________________________________________|"<<endl;
+
+        cout<<"______________________________________________________________________________"<<endl;
+        cout<<"|INTRARE PISCINA                                                              |"<<endl;
+        cout<<"|_____________________________________________________________________________|"<<endl;
+        cout<<"|                                      Adult	     Copii (<16 ani)          |"<<endl;
+        cout<<"|1 INTR. (FULL DAY)	               50 lei         	30 lei                |"<<endl;
+        cout<<"|_____________________________________________________________________________|"<<endl;
+        cout<<endl;
+    }
+
+    void afis_multu()
+    {
+        cout<<"multumire";
+    }
+
+};
+void exceptie(int tasta)
+{
+    if (tasta <=6) throw tasta;
+    if( tasta >6) throw 'n';
+
+}
+int main()
+{
+     int tasta;
+      int gg=0;
+	  set <cont*> vectorcont;
+
+     cout<<"Bine ati venit la SUN GYM BUCURESTI, locul unde te poti antrena si relaxa!"<<endl;
+     cout<<"Vrei sa te antrenezi? Vrei sa inoti? Vrei la sauna? Toate acestea le poti avea la sala noastra!"<<endl;
+     cout<<"Pentru a vedea programul apasati tasta 1"<<endl;
+     cout <<"Pentru a va inregistra apasati tasta 2"<<endl;
+     cout <<"Pentru a afla detalii despre antrenorii nostrii personali apasati tasta 3"<<endl;
+     cout <<"Pentru a intra in magazinul nostru PROTEINFIT apasati tasta 4"<<endl;
+     cout<<"Pentru a vedea preturile abonamentelor noastre, apasati tasta 5"<<endl;
+     cout<<"Pentru contact apasati tasta 6"<<endl;
+    cout<<"introdu tasta"<<endl;
+     cin>>tasta;
+  do{
+
+    do{
+            try{
+                   exceptie(tasta);
+            }
+        catch(int)
+        {
+            cout<<"ai introdus tasta : "<<tasta<<endl;
+        }
+        catch(...)
+        {
+            cout<<"Tasta este gresita. Reintroduceti tasta: " <<endl;
+            cin>>tasta;
+        }
+    }while(tasta>6);
+
+
+     if(tasta==3)
+    {
+         vector <mostenesc_antrenori*> listaantrenori;
+        const char* nume_antrenori_sala[10]={"ADI IONITA","MARIUS COSTEL","OPREA ANA"};
+		const char* nume_antrenori_escalada[3]={"BOGDAN DUDAU","JUSTIN IONESCU"};
+		const char* nume_antrenori_inot[3]={"FLOREA IOANA","BOGDAN MARIN"};
+
+        int  pret_sala[]={900,700,600};
+        int pret_inot[]={600,700,888};
+        int pret_catarat[]={500,700,888};
+        antrenori X(3,pret_sala,2,pret_catarat,4,2,pret_inot);
+
+
+        cout<<X<<endl;
+        g<<X;
+        cin>>X;
+        f>>X;
+        int T;
+        T=X.afis_tasta();
+        X.verificare();
+
+        if(T==1)
+        {
+
+            X.afis_antrenori_sala();
+
+        }
+        if(T==2)
+        {
+             X.afis_antrenori_catarat();
+        }
+        if(T==3)
+        {
+            X.afis_antrenori_inot();
+        }
+        cout<<endl<<endl;
+        mostenesc_antrenori H;
+        cout<<H;
+        g<<H;
+        H.afis_antrenori_sala();
+        cin>>H;
+        f>>H;
+        H.felicitari();
+        listaantrenori.push_back(&H);
+        cout<<endl;
+        cout<<"Date user: "<<endl;
+        for (auto i = listaantrenori.begin(); i != listaantrenori.end(); ++i)
+        {
+ //                cout<<endl;
+                 cout<<"nume si prenumele: "<<(*i)->afis_nume()<<" "<<(*i)->afis_prenume();
+                 cout<<"\n";
+                 cout << "email  :  "<<(*i)->afis_email() << "\n ";
+
+        }
+    }
+
+	 if (tasta == 2)
+	 {
+		 const int cod = 25;
+		 cin.get();
+		 cout << "Bine ai venit in clubul nostru!" << endl;
+		 char numecod[] = { "SUNGYM25" }, N[] = "numele si prenumele", E[] = "e-mail", pas[] = "parola";
+		 cont* X = new cont(cod, numecod, 4);
+		 char nume[20], prenume[20], email[200], parola[200];
+		 cont XX(2, 3);
+
+
+
+
+		 X->mesaj_cont(N);
+		 cin >> X;    ///NUMELE SI PRENUMELE
+		 f>>X;
+		  //f>>X;
+		 X->mesaj_cont(E);
+		 cin >> email;      ///EMAIL
+		// f>>email;
+		 X->mesaj_cont(pas);
+		 cin >> parola;     ///PAROLA
+		// f>>parola;
+		 while (X->verific_parola(parola) == 2)
+			 cin >> parola;
+
+
+		 X->set_email(email);    ///SETARE EMAIL
+		 cont s4 = *X;  /// COPY CONSTRUCTOR
+		 cout << endl;
+		 cout << s4;
+		 g << s4;
+		 vectorcont.insert(X);
+
+		 cout << "\nUseri inregistrati:\n";
+		 for (set<cont*>::iterator it = vectorcont.begin(); it != vectorcont.end(); it++)
+		 {
+			 cout << (*it)->afis_nume();
+			 cout << " ";
+			 cout << (*it)->afis_prenume();
+			 cout << "\n\n";
+		 }
+
+	 }
+
+       if (tasta == 4 )  ///MAGAZIN
+	{
+
+
+
+		int tastaPTcomanda;
+		int preturi[] = { 0,30,55,53,65,65,35,66,55,55,77,8,88,40,6,54,5,61 };
+		int pret_prosop = 30;
+		const char* protein[110] = {
+		"PROTEINE",
+		"VITAMINE SI MINERALE",
+		"Proteine din zer",
+		"Pentru un sitem imunitar puternic",
+		"Lapte si cazeina",
+		"Vitamine",
+		"Proteine vegane",
+		"Minerale",
+		"Amestecuri proteice" };
+
+		const char* carbo[100] = {
+		  "CARBOHIDRATI",
+		  "ALIMENTE SI GUSTARI",
+		  "Suplimente energizante",
+		  "Batoane proteice",
+		  "Geluri energizante",
+		  "Unturi",
+		  "Bauturi energizante",
+		  "Bauturi proteice",
+		  "Batoane energizante",
+		  "Inlocuitori pentru mese" };
+
+		magazin Y(protein, 9, carbo, 10, preturi, pret_prosop);
+        ++Y;
+
+		Y.afis_welcome_magazin();
+		Y.afis_prezentare_produse();
+		cout << Y;                            ///OPERATOR <<     (afiseaza ce trebuie sa faci pentru a incepe cumparaturile )
+	    g<<Y;
+		double cos = 0;
+		cin >> Y;
+		f>>Y;                           ///OPERATOR >> (citim ce produs vrem, iar apoi intram in while pentru a comanda mai multe produse daca vrem)
+		tastaPTcomanda = ((int)Y.setare_produs()) - 48;
+		if (tastaPTcomanda == 1)
+		{
+			unordered_map<int,int> tasteIntroduse;
+                while (tastaPTcomanda != 0)
+                {
+                    cout << "selecteaza tasta: " << endl;
+                    cin >> tastaPTcomanda;
+
+                    unordered_map<int,int>::iterator found = tasteIntroduse.find(tastaPTcomanda);
+                    if (found != tasteIntroduse.end())
+                    {
+                        found->second++;
+                    }
+                    else
+                    {
+                        tasteIntroduse[tastaPTcomanda] = 1;
+                    }
+
+                    if (tastaPTcomanda == 1)
+                    {
+                        cout << "PROSOP ";
+                        Y.set_pret(tastaPTcomanda);
+                        cout << ": " << Y.pretu_produsului() << " lei " << endl;
+                        Y.calculam_pret_cos();
+
+                    }
+
+                    if (tastaPTcomanda > 1 and tastaPTcomanda < 10)
+                    {
+                        Y.set_pret(tastaPTcomanda);    ///setam pret
+                        Y.afis_nume_produs(tastaPTcomanda);   ///afisam nume produs
+                        cout << ": " << Y.pretu_produsului() << " lei " << endl;
+                        Y.calculam_pret_cos();
+
+                    }
+				if (tastaPTcomanda > 9)
+				{
+					Y.set_pret(tastaPTcomanda);    ///setam pret
+					tastaPTcomanda = tastaPTcomanda - 8;
+					Y.afis_nume_produs1(tastaPTcomanda);   ///afisam nume produs
+					cout << ": " << Y.pretu_produsului() << " lei " << endl;
+					Y.calculam_pret_cos();
+
+				}
+			 }
+			 int ok=0;
+
+			for (pair<int,int> it : tasteIntroduse)
+			{
+			    if(it.first==0)
+                    ok=1;
+                else
+				    cout << protein[it.first] << " x " << it.second << " \n";
+			}
+             if(ok!=1)
+			cout << Y.calculam_pret_cos() << " LEI TOTAL COS";
+			float sumafinal=Y.calculam_pret_cos();
+			copil_magazin G(sumafinal);
+			if(ok!=1)
+			{
+			    cout<<G;
+			    cin>>G;
+			}
+            try {
+                        if(G.reducem()!=0){
+                           cout<<"PRET FINAL COS: " <<G.reducem()<<" lei";
+                            G.afis_introdu_adresa();
+                             }
+
+                       else
+                        {
+                            throw 2;
+                        }
+                    }
+             catch (int t)
+                {
+                  cout<<"AI COSUL GOL \n";
+                }
+
+        }
+    }
+     if(tasta==1)    ///PROGRAM
+    {
+        char ora1s[]= {"5:00"};
+        char ora1f[]= {"00:00"};
+        char ora2s[]= {"9:00"};
+        char ora2f[]= {"22:00"};
+
+        char orabazinstart1[]= {"5:00"}; ///de luni
+        char orabazinfinis1[]= {"20:00"}; ///pana vineri
+        char orabazinstart2[]= {"5:00"}; ///de sambata
+        char orabazinfinis2[]= {"20:00"}; ///pana duminica
+
+        int lungimibazin[]={50,50,2,1};
+        int a;
+        program s1(6,7,8,9);
+        cout<<s1;
+        g<<s1;
+        cin>>s1;
+        f>>s1;
+        a=int(s1.afis_ce_e_citit())-48;
+        s1.setareora1(ora1s,ora1f);
+        s1.setareora2(ora2s,ora2f);
+        s1.volumBAZIN(lungimibazin);
+        s1.volumPISCINAadulti(30,20,2,1);
+        s1.volumPISCINAcopii(0.5,30,20,1);
+        s1.setareorabazin(orabazinstart1,orabazinfinis1);
+        s1.setnrtotalcatarat(2);
+
+        if(a==6)     ///PROGRAM SALA
+            s1.afisprogramsala();
+
+        if(a==7)   ///PROGRAM PISCINA
+        {
+            s1.mesajbazin();
+            s1.afisprogrambazin();
+        }
+        if(a==8)     ///PROGRAM SAUNA
+        {
+            s1.mesajsauna();
+            s1.afisprogramsauna();
+        }
+        if(a==9)      ///PROGRAM CATARAT
+        {
+            --s1;
+            cout<<"SUN GYM are "<<s1.NRtotalcatarat()<<" sali de catarat ,dintre care una pentru incapatori si una pentru experimentati"<<endl;
+            s1.afiscatarat();
+        }
+       list <program*> listapro;
+        listapro.push_back(&s1);
+         for (auto i = listapro.begin(); i != listapro.end(); ++i)
+             {
+                cout<<endl;
+                 cout<<(*i)->afis_text()<<endl;
+
+
+              }
+
+    }
+    if (tasta==5)
+    {
+
+        abonamente* P=new mostenire_abonamente;
+
+        P->afis_abonamente_fitness();
+        P->afis_abonamente_escalada();
+        P->afis_abonamente_sauna();
+        P->afis_abonamente_bazin();
+        cout<<*P;
+        P->afis_multu();
+        cout<<endl;
+    }
+
+   if (tasta==6)
+    {
+        cout<<endl;
+        contact* Y= new mostenire_contact1 ;
+         Y->afis_contact1();
+         Y->afis_contact2();
+
+         mostenire_contact1 * X= new mostenire_contact2;
+         X->afis_contact2();
+
+
+    }
+    cout<<"introduceti mai departe alta tasta daca vreti sa ramaneti in aplicatie, altfel apasati tasta 10 pentru a iesi: ";
+    cin>>tasta;
+    cout<<endl;
+}while(tasta!=10);
+
+
+    return 0;
+}
