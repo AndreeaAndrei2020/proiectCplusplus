@@ -1,1 +1,316 @@
+/*
+numele si grupa: Andrei Andreea Ioana grupa 212
+Compilator: GNU GCC Compiler
+Tutore de laborator : EDUARD GABRIEL SZMETEANCA
+*/
+
+
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+class Vaccin{
+
+	protected:
+		double pret;
+		string producator;
+		double temperatura;
+		vector <string> ListaSubstante;
+
+	public:
+
+		void afisareSchemaVaccinare();
+
+		Vaccin();
+		Vaccin(const double &, const string &, const double &, const vector <string> &);
+		friend istream& operator >>(istream &in, Vaccin &v);
+		friend ostream& operator <<(ostream &out, const Vaccin &v);
+
+};
+
+void Vaccin::afisareSchemaVaccinare() {}
+
+Vaccin::Vaccin() {}
+Vaccin::Vaccin(const double &pret, const string &producator, const double &temperatura, const vector <string> &ListaSubstante) : pret(pret), producator(producator), temperatura(temperatura), ListaSubstante(ListaSubstante) {} // constructor vaccinare
+
+istream& operator >>(istream &in, Vaccin &v){
+
+	cout << "Pretul vaccinului: "; in >> v.pret;
+	cout << "Producatorul vaccinului: "; in >> v.producator;
+	cout << "Temperatura de depozitare: "; in >> v.temperatura;
+
+	int n;
+	cout << "Numarul de substante ce intra in compozitia vaccinului: "; in >> n;
+
+	v.ListaSubstante.reserve(n);
+	for(int i = 0; i < n; ++i){
+
+		string substanta;
+		cout << "Substanta " << i + 1 << ": "; in >> substanta;
+		v.ListaSubstante.push_back(substanta);
+	}
+
+	return in;
+}
+
+
+ostream& operator <<(ostream &out, const Vaccin &v){
+
+	out << "Pret: " << v.pret << '\n';
+	out << "Producator: " << v.producator << '\n';
+	out << "Temperatura: " << v.temperatura << '\n';
+
+	out << "Lista de substante: ";
+	for(int i = 0; i < v.ListaSubstante.size(); ++i)
+		out << v.ListaSubstante[i] << ' ';
+	out << '\n';
+
+	return out;
+}
+
+
+
+class VaccinAntigripal : public Vaccin{
+
+	string tulpina;
+	bool respectaRecomandariOMS;
+
+	public:
+
+		VaccinAntigripal();
+		VaccinAntigripal(const double &, const string &, const double &, const vector <string> &, const string &, const bool &);
+		friend istream& operator >>(istream &, VaccinAntigripal &);
+		friend ostream& operator <<(ostream &, const VaccinAntigripal &);
+};
+
+VaccinAntigripal::VaccinAntigripal() : Vaccin() {}
+
+VaccinAntigripal::VaccinAntigripal(const double &pret, const string &producator, const double &temperatura, const vector <string> &ListaSubstante, const string &tulpina, const bool &respectaRecomandariOMS) : Vaccin(pret, producator, temperatura, ListaSubstante), tulpina(tulpina), respectaRecomandariOMS(respectaRecomandariOMS) {}
+
+istream& operator >>(istream &in, VaccinAntigripal &v){
+
+	in >> (Vaccin &)v;
+
+	cout << "Introduceti tulpina: "; in >> v.tulpina;
+	string respecta;
+	cout << "Vaccinul respecta recomandarile OMS?(Da sau Nu): "; in >> respecta;
+
+	if(respecta == "Da")
+		v.respectaRecomandariOMS = true;
+	else v.respectaRecomandariOMS = false; // chiar daca input-ul este invalid presupun ca nu se respecta
+
+	return in;
+
+}
+
+ostream& operator <<(ostream &out, const VaccinAntigripal &v){
+
+	out << (const Vaccin &)v;
+
+	out << "Tulpina: " << v.tulpina << '\n';
+	out << "Respecta recomandarile OMS: " << (v.respectaRecomandariOMS ? "Da" : "Nu") << '\n';
+
+	return out;
+}
+
+
+class VaccinAntihepatic : public Vaccin {
+
+	string tipHepatita;
+	string modVaccinare;
+
+	public:
+		VaccinAntihepatic();
+		VaccinAntihepatic(const double &, const string &, const double &, const vector <string> &, const string &, const string &);
+		friend istream& operator >>(istream &, VaccinAntihepatic &);
+
+		friend ostream& operator <<(ostream &, const VaccinAntihepatic &);
+};
+
+VaccinAntihepatic::VaccinAntihepatic() : Vaccin() {}
+
+VaccinAntihepatic::VaccinAntihepatic(const double &pret, const string &producator, const double &temperatura, const vector <string> &ListaSubstante, const string &tipHepatita,
+const string &modVaccinare) : Vaccin(pret, producator, temperatura, ListaSubstante), tipHepatita(tipHepatita), modVaccinare(modVaccinare) {}
+
+istream& operator >>(istream &in, VaccinAntihepatic &v){
+
+	in >> (Vaccin &)v;
+
+	cout << "Tipul de hepatita: "; in >> v.tipHepatita;
+	cout << "Modul de vaccinare: "; in >> v.modVaccinare;
+
+	return in;
+}
+
+ostream& operator <<(ostream &out, const VaccinAntihepatic &v){
+
+	out << (const Vaccin &)v;
+
+	out << "Tipul de hepatita: " << v.tipHepatita << '\n';
+	out << "Modul de vaccinare: " << v.modVaccinare << '\n';
+
+	return out;
+}
+
+class VaccinAntiSarsCov2 : public Vaccin{
+
+	vector <string> ReactiiAdverse;
+	double rataEficienta;
+	vector <string> MedicamenteContraindicate;
+
+	public:
+
+		VaccinAntiSarsCov2();
+		VaccinAntiSarsCov2(const double &, const string &, const double &, const vector <string> &, const vector <string> &, const double &, const vector <string> &);
+		friend istream& operator >>(istream &, VaccinAntiSarsCov2 &);
+		friend ostream& operator <<(ostream &, const VaccinAntiSarsCov2 &);
+};
+
+VaccinAntiSarsCov2::VaccinAntiSarsCov2() : Vaccin() {}
+
+VaccinAntiSarsCov2::VaccinAntiSarsCov2(const double &pret, const string &producator, const double &temperatura, const vector <string> &ListaSubstante, const vector <string> &ReactiiAdverse, const double &rataEficienta, const vector <string> &MedicamenteContraindicate) : Vaccin(pret, producator, temperatura, ListaSubstante), ReactiiAdverse(ReactiiAdverse), rataEficienta(rataEficienta), MedicamenteContraindicate(MedicamenteContraindicate) {}
+
+ostream& operator <<(ostream &out, const VaccinAntiSarsCov2 &v){
+
+	out << (const Vaccin &)v;
+
+	out << "Reactiile adverse: ";
+	for(int i = 0; i < (int)v.ReactiiAdverse.size(); ++i){
+
+		out << v.ReactiiAdverse[i] << ' ';
+	}
+	out << '\n';
+
+	out << "Rata de eficienta: " << v.rataEficienta << '\n';
+
+	out << "Medicamentele contraindicate: ";
+	for(int i = 0; i < (int)v.MedicamenteContraindicate.size(); ++i)
+		out << v.MedicamenteContraindicate[i] << ' ';
+	out << '\n';
+
+	return out;
+}
+
+istream& operator >>(istream &in, VaccinAntiSarsCov2 &v){
+
+	in >> (Vaccin &)v;
+
+	int n;
+	cout << "Numarul de reactii adverse: "; in >> n;
+	v.ReactiiAdverse.reserve(n);
+
+	for(int i = 0; i < n; ++i){
+
+		cout << "Reactia adversa numarul " << i + 1 << ": ";
+		string reactie;
+		in >> reactie;
+
+		v.ReactiiAdverse.push_back(reactie);
+	}
+
+	cout << "Rata de eficienta: "; in >> v.rataEficienta;
+
+	cout << "Numarul de medicamente contraindicate: "; in >> n;
+	v.MedicamenteContraindicate.reserve(n);
+
+	for(int i = 0; i < n; ++i){
+
+		cout << "Medicamentul contraindicat numarul: " << i + 1 << ": ";
+		string medicament;
+		in >> medicament;
+
+		v.MedicamenteContraindicate.push_back(medicament);
+	}
+
+
+	return in;
+}
+
+
+class Comanda{
+
+	static int id_comanda;
+	string data;
+	string cumparator;
+	string comenzi;
+	int cantitate;
+
+	public:
+		Comanda();
+		Comanda(const string &, const string &, const string &, const int &);
+
+		friend ostream& operator <<(ostream &, const Comanda &);
+};
+
+int Comanda::id_comanda = 0; // initializez  valoarea variabilei statice
+
+Comanda::Comanda(const string &data, const string &cumparator, const string &comenzi, const int &cantitate) : data(data), cumparator(cumparator), comenzi(comenzi), cantitate(cantitate) { ++Comanda::id_comanda; }// incrementez la fiecare comanda efectuata
+
+
+ostream& operator <<(ostream &out, const Comanda &c){
+
+	out << "Data comenzii: " << c.data << '\n';
+	out << "Cumparatorul: " << c.cumparator << '\n';
+	out << "Comenzi: " << c.comenzi << '\n';
+	out << "Cantitate: " << c.cantitate << '\n';
+
+	return out;
+}
+
+
+Comanda::Comanda() {}
+
+class ListaComenzi{
+
+	vector <Comanda> comenzi;
+
+	public:
+
+		ListaComenzi();
+
+		Comanda& operator [](const int &);
+		ListaComenzi& operator +(const Comanda &);
+		ListaComenzi& operator =(const ListaComenzi &);
+};
+
+ListaComenzi::ListaComenzi() {}
+
+Comanda& ListaComenzi::operator [](const int &i){
+
+	return this->comenzi[i];
+}
+
+ListaComenzi& ListaComenzi::operator +(const Comanda &){
+
+	return *this;
+}
+
+ListaComenzi& ListaComenzi::operator =(const ListaComenzi& other){
+
+	return *this;
+}
+
+
+int main(){
+
+	VaccinAntigripal a;
+	VaccinAntihepatic b;
+	VaccinAntiSarsCov2 c;
+	cin>>a>>b>>c;
+	cout<<a<<b<<c;
+	Vaccin* list[3];
+	list[0]=new VaccinAntigripal();
+	list[1]=new VaccinAntihepatic ();
+	list[2]=new VaccinAntiSarsCov2();
+
+	for(int i=0; i<3; i++)
+		list[i]-> afisareSchemaVaccinare();
+
+	Comanda com1("20-12-2020", "SpitalX", "AntiSarsCov2", 20);
+	ListaComenzi lista;
+	lista=lista+com1;
+	cout<<lista[0];
+}
 
